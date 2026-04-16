@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI for Charity & Small Business — Concept Overview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:  #1a2a4a;
+    --blue:  #2563eb;
+    --teal:  #0d9488;
+    --gold:  #d97706;
+    --light: #f8fafc;
+    --card:  #ffffff;
+    --text:  #1e293b;
+    --muted: #64748b;
+    --border:#e2e8f0;
+    --radius:12px;
+  }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--light); color: var(--text); line-height: 1.7; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0d4f4a 100%);
+    color: white; text-align: center; padding: 72px 24px 60px;
+  }
+  .hero .badge {
+    display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    color: #93c5fd; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 20px;
+  }
+  .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  .hero h1 span { color: #6ee7b7; }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 580px; margin: 0 auto 28px; }
+  .hero .from { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-top: 24px; }
+  .hero .from strong { color: rgba(255,255,255,0.65); }
+
+  /* LAYOUT */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 56px 0 40px; }
+  section + section { border-top: 1px solid var(--border); }
+  h2 { font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  h2 .icon { margin-right: 8px; }
+  .section-sub { color: var(--muted); margin-bottom: 28px; font-size: 0.95rem; }
+
+  /* PROBLEM */
+  .pain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .pain-card {
+    background: white; border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; border-left: 4px solid #ef4444;
+  }
+  .pain-card .emoji { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+  .pain-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+  .pain-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.5; }
+
+  /* PILOT */
+  .pilot-box {
+    background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+    border: 1px solid #bfdbfe; border-radius: var(--radius); padding: 28px 32px; margin-bottom: 28px;
+  }
+  .pilot-box h3 { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+  .pilot-list { list-style: none; }
+  .pilot-list li { padding: 6px 0; font-size: 0.92rem; display: flex; align-items: flex-start; gap: 10px; }
+  .pilot-list li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .before-after {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;
+  }
+  .ba-card { background: white; border-radius: 10px; padding: 16px 20px; }
+  .ba-card.before { border-top: 3px solid #ef4444; }
+  .ba-card.after  { border-top: 3px solid var(--teal); }
+  .ba-card h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 10px; }
+  .ba-card.before h4 { color: #ef4444; }
+  .ba-card.after  h4 { color: var(--teal); }
+  .ba-card ul { list-style: none; font-size: 0.84rem; color: var(--muted); }
+  .ba-card ul li { padding: 3px 0; }
+
+  /* SOLUTION */
+  .solution-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+  .sol-card {
+    background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .sol-card .icon-wrap {
+    width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.3rem; flex-shrink: 0;
+  }
+  .sol-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+  .sol-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.5; flex: 1; }
+  .sol-card .time-save {
+    font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 12px;
+    background: #dcfce7; color: #15803d; width: fit-content;
+  }
+
+  /* MODEL */
+  .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+  .model-card {
+    background: white; border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px; position: relative; overflow: hidden;
+  }
+  .model-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .model-card.m1::before { background: var(--blue); }
+  .model-card.m2::before { background: var(--teal); }
+  .model-card.m3::before { background: var(--gold); }
+  .model-card .tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; }
+  .model-card.m1 .tag { color: var(--blue); }
+  .model-card.m2 .tag { color: var(--teal); }
+  .model-card.m3 .tag { color: var(--gold); }
+  .model-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .model-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px; }
+  .model-card .price { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+  .model-card .price span { font-size: 0.75rem; color: var(--muted); font-weight: 400; }
+  .model-card ul { list-style: none; font-size: 0.8rem; color: var(--muted); }
+  .model-card ul li { padding: 3px 0; }
+  .model-card ul li::before { content: '· '; }
+
+  /* MARKET */
+  .stat-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; }
+  .stat-box {
+    flex: 1; min-width: 160px; background: white; border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; text-align: center;
+  }
+  .stat-box .num { font-size: 2rem; font-weight: 800; color: var(--navy); }
+  .stat-box .label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+  /* ROADMAP */
+  .road-steps { display: flex; flex-direction: column; gap: 0; }
+  .road-step { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .road-step:last-child { border-bottom: none; }
+  .road-num {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: white;
+    font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+  }
+  .road-step h3 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .road-step .phase { font-size: 0.72rem; color: var(--blue); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .road-step p { font-size: 0.83rem; color: var(--muted); }
+
+  /* FOOTER */
+  footer { background: var(--navy); color: rgba(255,255,255,0.5); text-align: center; padding: 32px 20px; font-size: 0.82rem; }
+  footer strong { color: rgba(255,255,255,0.8); }
+
+  /* CALLOUT */
+  .callout {
+    background: #fffbeb; border: 1px solid #fcd34d; border-radius: var(--radius);
+    padding: 20px 24px; margin: 24px 0; font-size: 0.9rem;
+  }
+  .callout strong { color: #92400e; }
+
+  @media (max-width: 600px) {
+    .before-after { grid-template-columns: 1fr; }
+    .stat-box .num { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Concept Overview · 2025 Pilot</div>
+  <h1>AI-Powered Support for<br><span>Charities &amp; Small Businesses</span></h1>
+  <p>How one volunteer with AI tools replaced weeks of manual work — and what that model could look like at scale.</p>
+  <p class="from">Piloted at <strong>Christ Presbyterian Church · Madison International Partners Silent Auction 2025</strong></p>
+</div>
+
+<!-- 1. THE PROBLEM -->
+<section>
+  <div class="container">
+    <h2><span class="icon">❗</span>The Problem</h2>
+    <p class="section-sub">Nonprofits and small businesses have real operational needs — but almost never have the technical resources to meet them.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <span class="emoji">👥</span>
+        <h3>No IT Staff</h3>
+        <p>Most charities run on volunteers, many retired or non-technical. Professional tech help is unaffordable.</p>
+      </div>
+      <div class="pain-card">
+        <span class="emoji">⏱️</span>
+        <h3>Manual, Repetitive Work</h3>
+        <p>Data entry, donor tracking, website updates, and event logistics eat dozens of volunteer hours every year.</p>
+      </div>
+      <div class="pain-card">
+        <span class="emoji">💸</span>
+        <h3>Tight Budgets</h3>
+        <p>Software subscriptions, web agencies, and designers are luxuries most nonprofits simply cannot afford.</p>
+      </div>
+      <div class="pain-card">
+        <span class="emoji">🔄</span>
+        <h3>Repeated Every Year</h3>
+        <p>Annual events like silent auctions redo the same work from scratch because nothing is systematized or reusable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. THE PILOT -->
+<section>
+  <div class="container">
+    <h2><span class="icon">🧪</span>The Pilot — Madison Silent Auction 2025</h2>
+    <p class="section-sub">One volunteer with AI tools built what previously required a committee plus outside help.</p>
+
+    <div class="pilot-box">
+      <h3>What was built in a single session, using only AI:</h3>
+      <ul class="pilot-list">
+        <li>A fully designed, mobile-friendly auction catalog website with search, category filters, item detail popups, and Google Maps integration — customized for the church and event</li>
+        <li>A bid sheet scanning tool that reads photos of handwritten bid sheets and extracts winners automatically — handling cursive, mixed printing, and messy handwriting</li>
+        <li>A donor/contact tracking system structured for future reuse, replacing a manually maintained Excel spreadsheet</li>
+        <li>A sponsor acknowledgment banner and branded header — no design skills required</li>
+      </ul>
+    </div>
+
+    <div class="before-after">
+      <div class="ba-card before">
+        <h4>❌ Before AI</h4>
+        <ul>
+          <li>Website: Not done (too costly / complex)</li>
+          <li>Item catalog: Printed paper list</li>
+          <li>Winner tallying: Manual, stressful, error-prone</li>
+          <li>Donor tracking: Loose spreadsheet per year</li>
+          <li>Setup time: 20–40 volunteer hours</li>
+          <li>Tech help: Depended on one person who might not return</li>
+        </ul>
+      </div>
+      <div class="ba-card after">
+        <h4>✅ With AI</h4>
+        <ul>
+          <li>Website: Done, live, shareable in hours</li>
+          <li>Item catalog: Searchable, mobile-friendly, filterable</li>
+          <li>Winner tallying: Photo → winners list in under 2 minutes</li>
+          <li>Donor tracking: Structured, reusable year over year</li>
+          <li>Setup time: 2–4 hours (including learning)</li>
+          <li>Tech help: Any literate volunteer can operate it</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. THE SOLUTION MODEL -->
+<section>
+  <div class="container">
+    <h2><span class="icon">🤖</span>What AI Actually Does Here</h2>
+    <p class="section-sub">Each task below used to require specialized skills. AI makes them accessible to any motivated volunteer or small business owner.</p>
+
+    <div class="solution-grid">
+      <div class="sol-card">
+        <div class="icon-wrap" style="background:#eff6ff">🌐</div>
+        <h3>Instant Websites</h3>
+        <p>Describe your event or business, and AI generates a complete, branded, mobile-friendly website — no coding or design skills needed.</p>
+        <div class="time-save">Saves 15–40 hours</div>
+      </div>
+      <div class="sol-card">
+        <div class="icon-wrap" style="background:#f0fdf4">✍️</div>
+        <h3>Handwriting Recognition</h3>
+        <p>Photo of a handwritten bid sheet → AI reads the cursive, identifies the highest bidder, and produces a winner list in seconds.</p>
+        <div class="time-save">Saves 30–60 min on auction night</div>
+      </div>
+      <div class="sol-card">
+        <div class="icon-wrap" style="background:#fff7ed">📋</div>
+        <h3>Data Entry & Organization</h3>
+        <p>Upload a donor list, spreadsheet, or stack of cards. AI structures, cleans, categorizes, and prepares data for reuse next year.</p>
+        <div class="time-save">Saves 5–10 hours</div>
+      </div>
+      <div class="sol-card">
+        <div class="icon-wrap" style="background:#fdf4ff">✉️</div>
+        <h3>Communications</h3>
+        <p>Donor thank-you letters, business solicitation emails, event announcements, social media posts — drafted and personalized in minutes.</p>
+        <div class="time-save">Saves 3–8 hours</div>
+      </div>
+      <div class="sol-card">
+        <div class="icon-wrap" style="background:#f0fdfa">📊</div>
+        <h3>Reports & Tracking</h3>
+        <p>Turn raw data into structured reports — funds raised, top bidders, donor retention trends — without any spreadsheet expertise.</p>
+        <div class="time-save">Saves 2–5 hours</div>
+      </div>
+      <div class="sol-card">
+        <div class="icon-wrap" style="background:#fefce8">🎨</div>
+        <h3>Design & Materials</h3>
+        <p>Bid sheets, event programs, sponsor flyers, name badges, and signage — generated from a description, ready to print.</p>
+        <div class="time-save">Saves 4–12 hours</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. BUSINESS MODEL -->
+<section>
+  <div class="container">
+    <h2><span class="icon">💡</span>Potential Business Model</h2>
+    <p class="section-sub">Three ways this pilot could become a repeatable service offering for other organizations.</p>
+
+    <div class="model-grid">
+      <div class="model-card m1">
+        <div class="tag">Option A</div>
+        <h3>Volunteer-as-a-Service</h3>
+        <p>One AI-fluent volunteer is placed with a charity for their annual event cycle. They use AI tools to do the work of 5–10 traditional volunteers — then hand off a repeatable system for next year.</p>
+        <p class="price">Free or cost of AI tools <span>(~$20–50/mo)</span></p>
+        <ul>
+          <li>Ideal for: churches, PTAs, community nonprofits</li>
+          <li>Risk: relies on finding volunteers</li>
+          <li>Outcome: sustainable, lower cost every year</li>
+        </ul>
+      </div>
+      <div class="model-card m2">
+        <div class="tag">Option B</div>
+        <h3>Micro-Consultancy</h3>
+        <p>Offer a fixed-price "event-in-a-box" package to small nonprofits: website, bid sheets, donor tracking, post-event reports, thank-you letters. Delivered in 1–2 weeks using AI tools.</p>
+        <p class="price">$300–800 per event <span>(per engagement)</span></p>
+        <ul>
+          <li>Ideal for: charities without any tech volunteers</li>
+          <li>Risk: requires marketing / client acquisition</li>
+          <li>Outcome: revenue-generating, scalable to 10–20 events/yr</li>
+        </ul>
+      </div>
+      <div class="model-card m3">
+        <div class="tag">Option C</div>
+        <h3>Nonprofit Tech Cooperative</h3>
+        <p>A small group (2–4 people) forms a shared services cooperative for 10–15 local nonprofits. Each nonprofit pays a small annual retainer in exchange for on-demand AI-assisted support throughout the year.</p>
+        <p class="price">$500–1,500/org/year <span>(retainer model)</span></p>
+        <ul>
+          <li>Ideal for: established local nonprofit community</li>
+          <li>Risk: requires trust-building and coordination</li>
+          <li>Outcome: recurring revenue, deep impact, community anchor</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Key insight:</strong> The AI tools cost roughly $20–50/month. The value delivered — websites, scanning tools, donor systems, communications — would cost a nonprofit $3,000–15,000 if purchased from traditional vendors. The opportunity is the <em>translation layer</em> between AI capability and organizations that need it but can't access it on their own.
+    </div>
+  </div>
+</section>
+
+<!-- 5. MARKET -->
+<section>
+  <div class="container">
+    <h2><span class="icon">📈</span>The Opportunity</h2>
+    <p class="section-sub">The addressable market is large, underserved, and sticky — organizations that need help every year.</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="num">1.8M</div>
+        <div class="label">Registered nonprofits in the U.S.</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">~85%</div>
+        <div class="label">Have no dedicated IT staff</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">33M</div>
+        <div class="label">Small businesses in the U.S.</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">&lt;10%</div>
+        <div class="label">Currently using AI in operations</div>
+      </div>
+    </div>
+
+    <p style="font-size:0.88rem; color:var(--muted);">
+      Most local charities run annual fundraisers (auctions, galas, walkathons) that follow the same playbook every year with no tech support. Most small businesses (restaurants, boutiques, service providers) have unmet needs for websites, marketing materials, and customer communications. Both groups represent recurring, relationship-based clients — not one-off transactions.
+    </p>
+  </div>
+</section>
+
+<!-- 6. ROADMAP -->
+<section>
+  <div class="container">
+    <h2><span class="icon">🗺️</span>Suggested Next Steps</h2>
+    <p class="section-sub">From this pilot to a repeatable model — a phased approach.</p>
+
+    <div class="road-steps">
+      <div class="road-step">
+        <div class="road-num">1</div>
+        <div>
+          <div class="phase">Now — Complete the 2025 Pilot</div>
+          <h3>Document what worked</h3>
+          <p>Run the 2025 auction with these AI tools. Capture time saved, volunteer reactions, and any friction points. This becomes your proof-of-concept story.</p>
+        </div>
+      </div>
+      <div class="road-step">
+        <div class="road-num">2</div>
+        <div>
+          <div class="phase">Post-event — Systematize</div>
+          <h3>Build a repeatable "playbook"</h3>
+          <p>Turn the tools and process into a simple guide any volunteer can follow next year. The goal: the 2026 auction should take half the time the 2025 auction took.</p>
+        </div>
+      </div>
+      <div class="road-step">
+        <div class="road-num">3</div>
+        <div>
+          <div class="phase">Fall 2025 — First External Pilot</div>
+          <h3>Offer it to one other local nonprofit — free</h3>
+          <p>Find a sister organization running a similar event. Offer to set up their auction tools at no cost. Use it to test whether the playbook transfers to a new organization without hand-holding.</p>
+        </div>
+      </div>
+      <div class="road-step">
+        <div class="road-num">4</div>
+        <div>
+          <div class="phase">2026 — Decide on the model</div>
+          <h3>Choose your path and begin client acquisition</h3>
+          <p>Based on the external pilot experience, choose Option A (volunteer), B (consultancy), or C (cooperative). Begin outreach to 3–5 local nonprofits with a concrete service offer and pricing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>AI for Charity & Small Business — Concept Overview</strong><br>
+  Piloted by Christ Presbyterian Church · Madison International Partners · Silent Auction 2025, Madison, WI
+</footer>
+
+</body>
+</html>
